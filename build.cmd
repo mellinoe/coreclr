@@ -471,6 +471,26 @@ if errorlevel 1 (
     exit /b 1
 )
 
+set __msbuildArgs="%__ProjectFilesDir%\src\.nuget\Microsoft.NETCore.ILAssembly\Microsoft.NETCore.ILAsm.builds" /p:Platform=%__BuildArch%
+%_msbuildexe% %__msbuildArgs% %__msbuildLogArgs%
+if errorlevel 1 (
+    echo %__MsgPrefix%Error: Nuget package generation failed build failed. Refer to the build log files for details:
+    echo     %__BuildLog%
+    echo     %__BuildWrn%
+    echo     %__BuildErr%
+    exit /b 1
+)
+
+set __msbuildArgs="%__ProjectFilesDir%\src\.nuget\Microsoft.NETCore.ILAssembly\Microsoft.NETCore.ILDasm.builds" /p:Platform=%__BuildArch%
+%_msbuildexe% %__msbuildArgs% %__msbuildLogArgs%
+if errorlevel 1 (
+    echo %__MsgPrefix%Error: Nuget package generation failed build failed. Refer to the build log files for details:
+    echo     %__BuildLog%
+    echo     %__BuildWrn%
+    echo     %__BuildErr%
+    exit /b 1
+)
+
 :SkipNuget
 
 :SkipCrossGenBuild
